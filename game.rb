@@ -1,7 +1,7 @@
 require 'gosu'
 
 class Game < Gosu::Window
-  attr_reader :jogador1, :jogador2
+  attr_reader :jogador1, :jogador2, :quem_joga, :quem_venceu
 
   def initialize
     super(600, 600)
@@ -21,8 +21,10 @@ class Game < Gosu::Window
   end
 
   def inicia_jogador
-    @jogador1 = []
-    @jogador2 = []
+    @jogador1 = {nome: "Jogador 1", jogadas: []}
+    @jogador2 = {nome: "Jogador 1", jogadas: []}
+    @quem_joga = 1
+    @quem_venceu = nil
   end
 
 
@@ -44,6 +46,7 @@ class Game < Gosu::Window
   def verifica_se_jogador_ganhou(jogador)
     @vencedor.each do |row|
       if verifica_jogada_ganhadora(row, jogador)
+        @quem_venceu = jogador
         return true
       end
     end
@@ -53,13 +56,19 @@ class Game < Gosu::Window
   def verifica_jogada_ganhadora(linha, jogador)
     tem = 0
     linha.each do |i|
-
-      if jogador.include? i
+      if jogador[:jogadas].include? i
         tem += 1
       end
     end
-
     tem == 3
+  end
+
+  def has_vencedor
+    if verifica_se_jogador_ganhou(@jogador1) || verifica_se_jogador_ganhou(@jogador2)
+      return true
+    else
+      return false
+    end
   end
 
   # Posicoes
@@ -95,6 +104,31 @@ class Game < Gosu::Window
 
   end
 
+
+  def play
+    while has_vencedor == false
+      puts "Jogador #{@quem_joga}, faça sua jogada"
+        if @quem_joga == 1
+          @jogador1[:jogadas] << gets.chomp.to_i
+        else
+          @jogador2[:jogadas] << gets.chomp.to_i
+        end
+      muda_jogada_para_outro
+    end
+
+    puts "Quem venceu foi o jogador: #{@quem_venceu[:nome]}"
+
+  end
+
+
+  def muda_jogada_para_outro
+    if @quem_joga == 1
+      @quem_joga = 2
+    else
+      @quem_joga = 1
+    end
+  end
+
 end
 
 window = Game.new
@@ -109,6 +143,4 @@ window.debug
 #window.jogador1 << 4
 #window.jogador1 << 7
 
-
-p window.verifica_se_jogador_ganhou(window.jogador1)
-
+window.play
