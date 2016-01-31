@@ -12,12 +12,16 @@ class Game < Gosu::Window
   end
 
   def draw
+
     @background_image.draw(0,0,0)
-    @jogada.draw(0,0,1)
   end
 
+  def draw_cross_casa(casa)
+    @jogada.draw(0, 0, 1)
+  end
 
   def update
+    #if Gosu::button_down?Gosu
   end
 
   def inicia_jogador
