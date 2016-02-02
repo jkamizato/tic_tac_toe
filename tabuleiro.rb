@@ -91,6 +91,10 @@ class Tabuleiro
   end
 
   def pode_jogar(num)
+    if num < 1 || num > 9
+      return false
+    end
+
      return false if (@jogador1[:jogadas] + @jogador2[:jogadas]).include?num
      return true
   end
@@ -99,7 +103,7 @@ class Tabuleiro
     if pode_jogar(num)
       jogador[:jogadas] << num
     else
-      puts "Jogada #{num} já foi jogada, faca novamente"
+      puts "Jogada #{num} já foi jogada ou não permitida, faca novamente"
       faz_jogada(jogador, gets.chomp.to_i)
     end
 
