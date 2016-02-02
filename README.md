@@ -3,7 +3,9 @@
 O tabuleiro tem a seguinte configuração
 
 123
+
 456
+
 789
 
 Sendo cada número a posição da jogada.
