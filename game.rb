@@ -2,7 +2,7 @@ require 'gosu'
 require_relative 'tabuleiro'
 
 class Game < Gosu::Window
-  attr_reader :jogador1, :jogador2, :quem_joga, :quem_venceu
+
 
   def initialize
     super(600, 600)

@@ -1,8 +1,11 @@
 class Tabuleiro
 
+  attr_reader :jogador1, :jogador2, :quem_joga, :quem_venceu
+
   def initialize
     jogadas_vencedoras
     inicia_jogador
+    set_quem_joga 1
   end
 
   def inicializa_tabuleiro
@@ -15,7 +18,7 @@ class Tabuleiro
   def inicia_jogador
     @jogador1 = {nome: "Jogador 1", jogadas: []}
     @jogador2 = {nome: "Jogador 1", jogadas: []}
-    @quem_joga = 1
+
     @quem_venceu = nil
   end
 
@@ -62,23 +65,53 @@ class Tabuleiro
     @posicao[1] = [0, 0];
   end
 
+  def set_quem_joga(quem_joga)
+      @quem_joga = quem_joga
+  end
+
 
   def muda_jogada_para_outro
     if @quem_joga == 1
-      @quem_joga = 2
+      set_quem_joga 2
     else
-      @quem_joga = 1
+      set_quem_joga 1
     end
   end
 
+  def jogador1
+    @jogador1
+  end
+
+  def jogador2
+    @jogador2
+  end
+
+  def quem_joga
+    @quem_joga
+  end
+
+  def pode_jogar(num)
+     return false if (@jogador1[:jogadas] + @jogador2[:jogadas]).include?num
+     return true
+  end
+
+  def faz_jogada(jogador, num)
+    if pode_jogar(num)
+      jogador[:jogadas] << num
+    else
+      puts "Jogada #{num} já foi jogada, faca novamente"
+      faz_jogada(jogador, gets.chomp.to_i)
+    end
+
+  end
 
   def play
     until has_vencedor
       puts "Jogador #{@quem_joga}, faça sua jogada"
       if @quem_joga == 1
-        @jogador1[:jogadas] << gets.chomp.to_i
+        faz_jogada(@jogador1, gets.chomp.to_i)
       else
-        @jogador2[:jogadas] << gets.chomp.to_i
+        faz_jogada(@jogador2, gets.chomp.to_i)
       end
       muda_jogada_para_outro
     end
