@@ -5,6 +5,21 @@ class Tabuleiro
     inicia_jogador
   end
 
+  def inicializa_tabuleiro
+    @tabuleiro = Hash.new
+    for posicao in 1..9
+      @tabuleiro[posicao] = 0
+    end
+  end
+
+  def inicia_jogador
+    @jogador1 = {nome: "Jogador 1", jogadas: []}
+    @jogador2 = {nome: "Jogador 1", jogadas: []}
+    @quem_joga = 1
+    @quem_venceu = nil
+  end
+
+
   def jogadas_vencedoras
     #possiveis jogadas vencedoras
     @vencedor = [[1, 2, 3],
@@ -39,19 +54,7 @@ class Tabuleiro
   end
 
   def has_vencedor
-    if verifica_se_jogador_ganhou(@jogador1) || verifica_se_jogador_ganhou(@jogador2)
-      return true
-    else
-      return false
-    end
-  end
-
-
-  def inicializa_tabuleiro
-    @tabuleiro = Hash.new
-    for posicao in 1..9
-      @tabuleiro[posicao] = 0
-    end
+    verifica_se_jogador_ganhou(@jogador1) || verifica_se_jogador_ganhou(@jogador2)
   end
 
 
@@ -68,15 +71,9 @@ class Tabuleiro
     end
   end
 
-  def inicia_jogador
-    @jogador1 = {nome: "Jogador 1", jogadas: []}
-    @jogador2 = {nome: "Jogador 1", jogadas: []}
-    @quem_joga = 1
-    @quem_venceu = nil
-  end
 
   def play
-    while has_vencedor == false
+    until has_vencedor
       puts "Jogador #{@quem_joga}, faça sua jogada"
       if @quem_joga == 1
         @jogador1[:jogadas] << gets.chomp.to_i
@@ -85,9 +82,6 @@ class Tabuleiro
       end
       muda_jogada_para_outro
     end
-
     puts "Quem venceu foi o jogador: #{@quem_venceu[:nome]}"
-
   end
-
 end
