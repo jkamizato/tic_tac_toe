@@ -86,17 +86,22 @@ class Tabuleiro
     @jogador2
   end
 
-  def quem_joga
+  def quem_jogazzz
     @quem_joga
   end
 
   def pode_jogar(num)
-    if num < 1 || num > 9
-      return false
+    permissao = false
+
+    if num.between?(1,9)
+      permissao = true
     end
 
-     return false if (@jogador1[:jogadas] + @jogador2[:jogadas]).include?num
-     return true
+    if (@jogador1[:jogadas] + @jogador2[:jogadas]).include?num
+      permissao = false
+    end
+
+    permissao
   end
 
   def faz_jogada(jogador, num)
