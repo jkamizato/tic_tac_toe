@@ -78,18 +78,6 @@ class Tabuleiro
     end
   end
 
-  def jogador1
-    @jogador1
-  end
-
-  def jogador2
-    @jogador2
-  end
-
-  def quem_jogazzz
-    @quem_joga
-  end
-
   def pode_jogar(num)
     permissao = false
 

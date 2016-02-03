@@ -33,10 +33,4 @@ class TabuleiroTest < Test::Unit::TestCase
   end
 
 
-  def test_nao_repete_jogada
-    @meu_tabuleiro.faz_jogada(@meu_tabuleiro.jogador1, 1)
-    @meu_tabuleiro.faz_jogada(@meu_tabuleiro.jogador1, 1)
-    assert_equal(1, @meu_tabuleiro.jogador1[:jogadas].size)
-  end
-
 end
